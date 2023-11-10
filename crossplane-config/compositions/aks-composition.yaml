@@ -1,0 +1,37 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: aks-composition
+  namespace: crossplane-system
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: compute.crossplane.io/v1alpha1
+    kind: CompositeResourceDefinition
+  resources:
+    - name: akscluster
+      base:
+        apiVersion: containerservice.azure.crossplane.io/v1alpha3
+        kind: AKSCluster
+        spec:
+          forProvider:
+            location: eastus
+            dnsPrefix: myakscluster
+          providerConfigRef:
+            name: azure-provider
+      patches:
+        - fromFieldPath: "metadata.uid"
+          toFieldPath: "spec.writeConnectionSecretToRef.name"
+    - name: virtualnetwork
+      base:
+        apiVersion: network.azure.crossplane.io/v1alpha3
+        kind: VirtualNetwork
+        spec:
+          forProvider:
+            location: eastus
+            addressSpace: "10.0.0.0/16"
+          providerConfigRef:
+            name: azure-provider
+      patches:
+        - fromFieldPath: "metadata.uid"
+          toFieldPath: "spec.writeConnectionSecretToRef.name"

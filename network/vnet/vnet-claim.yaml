@@ -1,0 +1,12 @@
+apiVersion: network.crossplane.io/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: my-vnet
+  namespace: crossplane-system
+spec:
+  classRef:
+    apiVersion: network.azure.crossplane.io/v1alpha3
+    kind: VirtualNetworkClass
+    name: vnet-class
+  writeConnectionSecretToRef:
+    name: my-vnet-connection

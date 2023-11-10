@@ -1,0 +1,11 @@
+apiVersion: network.azure.crossplane.io/v1alpha3
+kind: VirtualNetworkClass
+metadata:
+  name: vnet-class
+  namespace: crossplane-system
+specTemplate:
+  forProvider:
+    location: eastus
+    addressSpace: "10.0.0.0/16"
+  providerConfigRef:
+    name: azure-provider
