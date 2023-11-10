@@ -14,7 +14,7 @@ az login
 
 #### Create a Service Principal
 ```bash
-az ad sp create-for-rbac --sdk-auth --role Contributor > creds.json
+az ad sp create-for-rbac --sdk-auth --role Contributor --scopes /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupId} > creds.json
 ```
 
 ## Create a Kubernetes Secret
