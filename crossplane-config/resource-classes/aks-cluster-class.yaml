@@ -1,0 +1,17 @@
+apiVersion: containerservice.azure.crossplane.io/v1alpha3
+kind: AKSClusterClass
+metadata:
+  name: aks-cluster-class
+  namespace: crossplane-system
+specTemplate:
+  forProvider:
+    location: eastus
+    kubernetesVersion: "1.20.7"
+    dnsPrefix: myakscluster
+    nodePoolProfile:
+      name: default
+      vmSize: Standard_D2s_v3
+      count: 2
+      osType: Linux
+  providerConfigRef:
+    name: azure-provider
