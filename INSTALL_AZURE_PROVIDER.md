@@ -35,12 +35,23 @@ kubectl get secret azure-provider-secret -n crossplane-system
 Now, you'll install the Azure provider in Crossplane and configure it using the secret you just created.
 
 1. Install the Azure provider:
-```bash
-kubectl crossplane install provider crossplane/provider-azure:v0.19.0
+Create a azure-provider.yaml file with the following content:
+```yaml
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure:v0.38.2
 ```
-Replace v0.19.0 with the latest version of the Azure provider for Crossplane.
 
-2. Create a ProviderConfig in Kubernetes:
+Install the provider:
+```bash
+kubectl apply -f azure-provider.yaml
+```
+
+
+1. Create a ProviderConfig in Kubernetes:
 Create a provider-config.yaml file with the following content:
 ```yaml
 apiVersion: azure.crossplane.io/v1beta1
@@ -56,7 +67,7 @@ spec:
       key: credentials
 ```
 
-3. Apply the ProviderConfig:
+1. Apply the ProviderConfig:
 ```bash
 kubectl apply -f provider-config.yaml
 ```
